@@ -4,6 +4,15 @@
     <input type="search" [(ngModel)]="searchText">
     <ng-content></ng-content>
   </div>
+  <div class="sort">
+    <select name="sort" #sort id="sort" *ngIf="config.listDescription.length" (change)="sortBy(sort.value, sortWay)">
+      <option *ngFor="let description of config.listDescription" value="{{description.field}}" >{{description.header}}</option>
+    </select>
+    <button (click)="sortBy(selectedField, sortWay)">
+      <span *ngIf="sortWay === SORT_WAY.DEC">&darr;</span>
+      <span *ngIf="sortWay === SORT_WAY.INC">&uarr;</span>
+    </button>
+  </div>
   <ng-container *ngIf="groupedList.list.length; else emptyData">
     <div class="list-group" *ngFor="let groupItem of groupedList.list">
       <h3>{{groupItem.name}}</h3>

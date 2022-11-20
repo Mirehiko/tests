@@ -30,6 +30,7 @@ export class DetailsPageComponent extends BaseDetailPage implements OnInit, OnDe
     private router: Router,
   ) {
     super(injector);
+    this.core = core;
     core.setTitle('Details');
   }
 
@@ -74,14 +75,12 @@ export class DetailsPageComponent extends BaseDetailPage implements OnInit, OnDe
 
   async save(data?: any): Promise<void> {
     this.goodOut = new GoodRequestDto();
-    this.goodOut.name = this.form.value.name;
-    this.goodOut.description = this.form.value.description;
-
+    this.goodOut.name = this.form.value.name.replace(/<[^>]*>/g, '');
+    this.goodOut.description = this.form.value.description.replace(/<[^>]*>/g, '');
     if (this.isNew) {
       await this.goodStorageService.create(this.goodOut);
       this.goodStorageService.selectGood('new');
       this.form.reset();
-
     }
     else {
       await this.goodStorageService.update(this.goodIn.id, this.goodOut, 'detail');

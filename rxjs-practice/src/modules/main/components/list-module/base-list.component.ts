@@ -10,7 +10,6 @@ import {
   TemplateRef,
 } from '@angular/core';
 import { nanoid } from 'nanoid';
-import { GoodStorageService } from '../../services/good-storage.service';
 import { IListItemChanged } from './list-items/base-list-item.component';
 
 
@@ -23,7 +22,7 @@ export interface IListGroup {
 
 export interface IListItemFieldDescription {
   field: string;
-  header?: String;
+  header: string;
   valueGetter?: (params: any) => string;
   template?: string;
   hidden?: boolean;
@@ -45,16 +44,17 @@ export class IListItem<T> extends IBaseListItem<T>{
   fields?: IListItemField[];
 }
 
-export interface IListConfig {
+export interface IListConfig<T> {
   listDescription: IListItemFieldDescription[];
   groups?: IListGroup[];
-  groupDivider?: (data: any[], type: any) => any[];
+  groupDivider?: (data: T[], type: any) => T[];
   selectable?: boolean;
   searchable?: boolean;
   editableItem?: boolean;
   navigateTo?: string;
   checkboxOnly?: boolean;
   lockNavigateToItemOnKey?: boolean;
+  sortFunction?: (arr: IListItem<T>[], field: string, way: SORT_WAY) => IListItem<T>[];
 }
 
 @Component({
@@ -66,12 +66,15 @@ export class BaseListComponent<T extends {id: number}> implements OnInit, OnChan
   @Input() listName: string;
   @Input() selectedId: number | string | null;
   @Input() dataList: T[] | null = [];
-  @Input() config: IListConfig;
+  @Input() config: IListConfig<T>;
   @Output() itemClicked: EventEmitter<number> = new EventEmitter<number>();
   @Output() contentChanged: EventEmitter<IListItemChanged<T>> = new EventEmitter<IListItemChanged<T>>();
   @Output() lastChange: EventEmitter<IListItemChanged<T>> = new EventEmitter<IListItemChanged<T>>();
   @Output() itemAction: EventEmitter<IListItemAction> = new EventEmitter<IListItemAction>();
   @ContentChild('customTemplate') customTemplate: TemplateRef<any>;
+  public sortWay: SORT_WAY = SORT_WAY.INC;
+  public selectedField: string;
+  public SORT_WAY = SORT_WAY;
 
   public searchText = '';
   filteredList: any[] = [];
@@ -79,14 +82,18 @@ export class BaseListComponent<T extends {id: number}> implements OnInit, OnChan
   groupedList: BaseGroupList<IListItem<T>>;
 
   constructor(
-    private goodStorageService: GoodStorageService
   ) {
   }
 
   async ngOnInit(): Promise<void> {
-    this.groupedList = new BaseGroupList<IListItem<T>>(this.listName);
+    this.groupedList = new BaseGroupList<T>(this.listName);
+    this.selectedField = this.config.listDescription[0].field;
     this.groupDivider = this.config.groupDivider ? this.config.groupDivider : this.groupDivider;
     this.refresh();
+  }
+
+  identify(index: number, item: IListItem<T>): number {
+    return item.data;
   }
 
   async ngOnChanges(changes: SimpleChanges): Promise<void> {
@@ -94,6 +101,8 @@ export class BaseListComponent<T extends {id: number}> implements OnInit, OnChan
 
     if (changes['dataList']) {
       this.dataList = changes['dataList'].currentValue;
+      this.refresh();
+      this.groupedList.list[0].sort(this.selectedField, this.sortWay);
     }
 
     if (changes['selectedId']) {
@@ -103,7 +112,6 @@ export class BaseListComponent<T extends {id: number}> implements OnInit, OnChan
       }));
     }
 
-    this.refresh();
   }
 
   async refresh(): Promise<void> {
@@ -147,12 +155,22 @@ export class BaseListComponent<T extends {id: number}> implements OnInit, OnChan
     return dataItem;
   }
 
+  sortBy(field: string, way: SORT_WAY): void {
+    if (!this.config.listDescription.length) {
+      return;
+    }
+    this.selectedField = field;
+    this.sortWay = way === SORT_WAY.INC ? SORT_WAY.DEC : SORT_WAY.INC;
+    this.groupedList.list[0].sort(this.selectedField, this.sortWay);
+  }
+
   onItemClicked(item: IListItem<T>): void {
     this.itemClicked.emit(item.id);
   }
 
   onContentChanged(change: IListItemChanged<T>): void {
     this.contentChanged.emit(change);
+    this.groupedList.list[0].sort(this.selectedField, this.sortWay);
   }
 
   onItemAction(id: number, action: ListItemOption): void {
@@ -164,6 +182,10 @@ export class BaseListComponent<T extends {id: number}> implements OnInit, OnChan
   }
 }
 
+export enum SORT_WAY {
+  INC,
+  DEC
+}
 
 
 export class BaseListOfGroup<T> {
@@ -195,7 +217,6 @@ export class BaseListOfGroup<T> {
     }
   }
 
-
   public remove(item: IListItem<T>): void {
     this._list = this.list.filter(i => item.id !== i.id);
   }
@@ -206,6 +227,23 @@ export class BaseListOfGroup<T> {
 
   public set list(list: IListItem<T>[]) {
     this._list = list;
+  }
+
+  public sort(field: string, sortWay: SORT_WAY): IListItem<T>[] {
+    console.log(field)
+    this._list = [...this._list].sort((a,b) => {
+      const fieldValA = a.fields!.find(f => f.field === field);
+      const fieldValB = b.fields!.find(f => f.field === field);
+
+      if (fieldValA!.value < fieldValB!.value) {
+        return sortWay === SORT_WAY.DEC ? 1 : -1;
+      }
+      if (fieldValA!.value > fieldValB!.value) {
+        return sortWay === SORT_WAY.DEC ? -1 : 1;
+      }
+      return 0;
+    });
+    return this._list;
   }
 
   public get id(): string {

@@ -24,7 +24,14 @@ export class BaseListItemComponent<T> {
     return this.selected;
   };
 
-  onContentChanged(content: string, fieldName: string, item: IListItem<T>): void {
-    this.contentChanged.emit({ content, fieldName, item });
+  onContentChanged(content: string, fieldName: string): void {
+    this.item.data[fieldName] = content;
+    // this.item!.fields!.map(f => {
+    //   if (f.field === fieldName) {
+    //     f.value = content;
+    //   }
+    //   return f;
+    // });
+    this.contentChanged.emit({ content: content.replace(/<[^>]*>/g, ''), fieldName, item: this.item });
   }
 }
