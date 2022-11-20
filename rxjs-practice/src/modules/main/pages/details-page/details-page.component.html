@@ -1,0 +1,25 @@
+<ng-container *ngIf="componentReady">
+  <div class="page-header">
+    <button class="form-btn form-btn--default" (click)="close()">Close</button>
+  </div>
+  <div class="page-body scrollable">
+    <div class=" ">
+      <form *ngIf="form" [formGroup]="form" class="form section">
+        <h2 [classList]="'f-control control-name'" [minHeight]="'initial'" [lockEnter]="true" inputDirective
+            formControlName="name"
+            (onEnter)="save()"
+            [placeholder]="namePlaceholder"></h2>
+
+        <div [classList]="'f-control control-description'" [minHeight]="'100px'" inputDirective
+             formControlName="description"
+             (onEnter)="save()"
+             [placeholder]="descriptionPlaceholder"></div>
+      </form>
+    </div>
+  </div>
+  <div class="page-footer">
+    <!--    <button *ngIf="isNew" (click)="save()">Save</button>-->
+    <button class="form-btn form-btn--submit" (click)="save()">Save</button>
+    <button class="form-btn form-btn--danger" *ngIf="!isNew" (click)="delete()">Delete</button>
+  </div>
+</ng-container>

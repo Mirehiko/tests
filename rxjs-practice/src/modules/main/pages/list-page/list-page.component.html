@@ -1,0 +1,18 @@
+<div class="page" [class.navigated]="isChildActive">
+  <div class="page-block page-block__body">
+    <app-base-list
+      [listName]="listName"
+      [dataList]="goodList"
+      [config]="goodListConfig"
+      [selectedId]="goodStorageService.selectedGoodId"
+      (contentChanged)="onContentChanged($event)"
+      (itemClicked)="onItemClicked($event)"
+    >
+      <button class="button-circle" (click)="onItemClicked('new')" title="Add good">+</button>
+    </app-base-list>
+  </div>
+  <div class="page-block page-block__detail">
+    <router-outlet></router-outlet>
+  </div>
+</div>
+

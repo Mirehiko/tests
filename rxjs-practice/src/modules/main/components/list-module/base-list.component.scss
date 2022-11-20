@@ -1,0 +1,20 @@
+.list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #eee;
+  margin-bottom: 15px;
+  padding: 15px 10px;
+  flex-wrap: wrap;
+}
+
+h1  {
+  margin: 0;
+  width: 100%;
+  @media screen and (min-width: 1024px){
+    width: auto;
+  }
+}
+:host {
+  padding: 0 10px;
+}

@@ -1,0 +1,34 @@
+<section>
+  <div class="list-header">
+    <h1>{{listName}}</h1>
+    <input type="search" [(ngModel)]="searchText">
+    <ng-content></ng-content>
+  </div>
+  <ng-container *ngIf="groupedList.list.length; else emptyData">
+    <div class="list-group" *ngFor="let groupItem of groupedList.list">
+      <h3>{{groupItem.name}}</h3>
+      <div class="list">
+        <ng-container *ngFor="let item of groupItem.list | appFilter: searchText">
+          <ng-container
+            [ngTemplateOutlet]="customTemplate || defaultTemplate"
+            [ngTemplateOutletContext]="{item: item, context: this}"></ng-container>
+        </ng-container>
+      </div>
+    </div>
+  </ng-container>
+</section>
+
+<ng-template #defaultTemplate let-item='item' let-context="context">
+  <app-base-list-item
+    [item]="item"
+    [selectable]="context.selectable"
+    [selected]="item.selected"
+    [editable]="!!config.editableItem"
+    (contentChanged)="context.onContentChanged($event)"
+    (click)="context.onItemClicked(item)"></app-base-list-item>
+</ng-template>
+
+
+<ng-template #emptyData>
+  <div app-empty-message>No data to display</div>
+</ng-template>

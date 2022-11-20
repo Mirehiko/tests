@@ -1,0 +1,92 @@
+:host {
+  height: inherit;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  width: 100%;
+}
+.page-body {
+  height: 100%;
+}
+h2 {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 6px;
+}
+pre {
+  margin: 0;
+}
+.page-footer {
+  padding: 15px 10px 0;
+}
+.form {
+  border-bottom: 1px solid #efefef;
+
+  ::ng-deep {
+    .control-placeholder {
+      position: absolute;
+    }
+    .control-name .control-placeholder {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 6px;
+      //margin: 10px 0 15px;
+    }
+    .f-control {
+      padding: 5px 10px 0;
+      margin-bottom: 10px;
+      //border: 1px solid #efefef;
+    }
+    .control-description, .control-description * {
+      font-size: 14px;
+      line-height: 20px;
+      font-family: sans-serif;
+      padding-top: 8px;
+    }
+  }
+}
+
+.page-header {
+  display: flex;
+  justify-content: end;
+}
+
+.form-btn {
+  border: none;
+  padding: 8px 10px;
+  border-radius: 3px;
+  margin: 0 5px 10px;
+
+  background: transparent;
+  color: #222;
+  cursor: pointer;
+
+  &--default {
+    border: 1px solid #222;
+  }
+
+  &--submit {
+    background: #32747a;
+    color: #fff;
+  }
+
+  &--danger {
+    background: #f44336;
+    color: #fff;
+  }
+
+  &:first-child {
+    margin-left: 0;
+  }
+  &:last-child {
+    margin-right: 0;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  :host {
+    position: relative;
+    top: 0;
+    left: 0;
+  }
+}

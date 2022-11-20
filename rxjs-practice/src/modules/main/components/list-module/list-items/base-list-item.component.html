@@ -1,0 +1,21 @@
+<div *ngIf="item" class="list-item">
+  <input type="checkbox" *ngIf="selectable">
+  <ng-container *ngIf="editable; else defaultTemplate">
+    <ng-container *ngFor="let field of item!.fields">
+      <div tabindex="-1"
+           title="{{field.value}}"
+           listInputDirective
+           [minHeight]="'initial'"
+           [placeholder]="'Type task name'"
+           [value]="field.value"
+           (contentChanged)="onContentChanged($event, field.field, item)">
+      </div>
+    </ng-container>
+  </ng-container>
+</div>
+
+<ng-template #defaultTemplate>
+  <ng-container *ngFor="let field of item.fields">
+    <span>{{field.value}}</span>
+  </ng-container>
+</ng-template>

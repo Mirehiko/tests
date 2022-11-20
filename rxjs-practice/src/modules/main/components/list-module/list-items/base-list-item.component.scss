@@ -1,0 +1,30 @@
+:host {
+  padding: 0 10px;
+  height: 40px;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  align-items: center;
+  //cursor: pointer;
+  transition: all 0.3s;
+  width: 100%;
+  &:last-child {
+    border-color: transparent;
+  }
+
+  &:hover {
+    background: #eee;
+  }
+  &.selected {
+    background: #49a6af;
+    color: #fff;
+  }
+}
+.list-item {
+  display: flex;
+  align-items: center;
+  width: inherit;
+  height: inherit;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
