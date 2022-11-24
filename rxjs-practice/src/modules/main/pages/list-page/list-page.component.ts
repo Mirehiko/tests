@@ -1,9 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { filter, Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { GoodRequestDto } from 'src/app/dto/good-request-dto';
 import { GoodResponseDto } from '../../../../app/dto/good-response-dto';
+import { IListItemField } from '../../components/list-module/base-list.component';
 import { IListItemChanged } from '../../components/list-module/list-items/base-list-item.component';
 import { CoreService } from '../../services/core.service';
 import { GoodStorageService } from '../../services/good-storage.service';
@@ -18,11 +20,11 @@ import { goodListConfig } from './good-list.config';
 export class ListPageComponent implements OnInit, OnDestroy {
   public goodList$: Observable<GoodResponseDto[]>
   public goodListConfig = goodListConfig;
-  public listName: string = 'Cool goods';
   private sub$ = new Subscription();
   public goodList: GoodResponseDto[] = [];
   public isChildActive: boolean = false;
   private initiated: any;
+  public page = new FormControl({prev: 2, current: 3, next: 4});
 
   private subscription: any;
   private child: any
@@ -66,11 +68,16 @@ export class ListPageComponent implements OnInit, OnDestroy {
   }
 
   async ngOnInit(): Promise<void> {
+    console.log(this.page.value)
   }
 
   onContentChanged(change: IListItemChanged<GoodResponseDto>) {
     const requestDto: GoodRequestDto = { ...change.item.data, ...{[`${change.fieldName}`]: change.content}};
     this.goodStorageService.update(change.item.id, requestDto, 'list');
+  }
+
+  onFieldClicked(field: IListItemField): void {
+    console.log(field)
   }
 
   onItemClicked(id: number | string) {

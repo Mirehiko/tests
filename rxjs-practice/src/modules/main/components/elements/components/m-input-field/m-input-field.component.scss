@@ -1,0 +1,55 @@
+@import "variables";
+
+:host {
+  display: inline-flex;
+  align-items: center;
+  border-bottom: 1px solid $control-accent-color-default;
+  transition: all .1s;
+  margin-bottom: 20px;
+
+  label {
+    z-index: 1;
+    transition: all .1s ease-in-out;
+    top: 16px;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+    position: absolute;
+    width: 100%;
+    color: $input-label-color;
+  }
+
+  &.focused, &.with-value {
+    border-color: $control-accent-color-focused;
+
+    label {
+      top: 0;
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 16px;
+    }
+  }
+}
+.m-input-wrapper {
+  position: relative;
+  padding: 16px 0 7px;
+  min-height: 42px;
+  width: 100%;
+
+  ::ng-deep {
+    input {
+      position: relative;
+      background: transparent;
+      padding: 0;
+      width: 100%;
+      border: none;
+      outline: none;
+      z-index: 2;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 19px;
+      caret-color: $control-accent-color-focused;
+      caret-shape: bar;
+    }
+  }
+}

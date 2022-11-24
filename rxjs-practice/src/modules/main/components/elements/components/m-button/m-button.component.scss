@@ -1,0 +1,40 @@
+@import "variables";
+
+:host.m-btn {
+  border: none;
+  padding: 8px 10px;
+  border-radius: 3px;
+  margin: 0 5px 10px;
+  display: inline-flex;
+  align-items: center;
+
+  background: transparent;
+  color: $blue-text;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 16px;
+  cursor: pointer;
+
+  &--default {
+    border: 1px solid $blue-text;
+  }
+
+  &--submit {
+    background: #32747a;
+    color: #fff;
+  }
+
+  &--danger {
+    background: #f44336;
+    color: #fff;
+  }
+
+  &:first-child {
+    margin-left: 0;
+  }
+  &:last-child {
+    margin-right: 0;
+  }
+}
+
+

@@ -19,6 +19,7 @@ export class BaseListItemComponent<T> {
   @Input() selected: boolean = false;
   @Input() editable: boolean = true;
   @Output() contentChanged: EventEmitter<IListItemChanged<T>> = new EventEmitter<IListItemChanged<T>>();
+  @Output() clicked: EventEmitter<IListItem<T>> = new EventEmitter<IListItem<T>>();
 
   @HostBinding('class.selected') get class() {
     return this.selected;
@@ -26,12 +27,10 @@ export class BaseListItemComponent<T> {
 
   onContentChanged(content: string, fieldName: string): void {
     this.item.data[fieldName] = content;
-    // this.item!.fields!.map(f => {
-    //   if (f.field === fieldName) {
-    //     f.value = content;
-    //   }
-    //   return f;
-    // });
     this.contentChanged.emit({ content: content.replace(/<[^>]*>/g, ''), fieldName, item: this.item });
+  }
+
+  onClicked(): void {
+    this.clicked.emit(this.item);
   }
 }

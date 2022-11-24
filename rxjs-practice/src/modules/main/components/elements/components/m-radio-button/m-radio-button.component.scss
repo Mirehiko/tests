@@ -1,0 +1,60 @@
+@import "variables";
+
+:host {
+  display: block;
+  margin-bottom: 16px;
+}
+input[type="radio"] {
+  display: none;
+}
+
+.m-radio__label {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 19px;
+  color: rgba(0, 0, 0, 0.87);
+  display: flex;
+  align-items: center;
+}
+
+.m-radio-input {
+  margin-right: 28px;
+  cursor: pointer;
+}
+.m-radio-icon {
+  position: relative;
+  &:before, &:after {
+    content: '';
+    border-radius: 50px;
+    overflow: hidden;
+    display: block;
+    box-sizing: border-box;
+    transition: all .2s ease-in-out;
+  }
+  &:before {
+    height: 20px;
+    width: 20px;
+    border: 2px solid $input-button-color;
+  }
+  &:after {
+    display: none;
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    height: 10px;
+    width: 10px;
+    background-color: $blue-text;
+  }
+}
+
+input[type="radio"]:checked + .m-radio-icon {
+  &:before {
+    border-color: $blue-text;
+  }
+  &:after {
+    display: block;
+  }
+}
+.m-radio__text {
+  cursor: pointer;
+}

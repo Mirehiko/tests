@@ -1,0 +1,5 @@
+<div>
+  <button *ngIf="value.value.prev" (click)="prev()"><span icon icon-prev></span></button>
+  <span>{{value.value.current}}</span>
+  <button *ngIf="value.value.next" (click)="next()"><span icon icon-next></span></button>
+</div>

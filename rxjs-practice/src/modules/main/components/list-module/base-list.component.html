@@ -1,11 +1,11 @@
 <section>
-  <div class="list-header">
+  <div *ngIf="listName" class="list-header">
     <h1>{{listName}}</h1>
-    <input type="search" [(ngModel)]="searchText">
+    <input *ngIf="config.searchable" type="search" [(ngModel)]="searchText">
     <ng-content></ng-content>
   </div>
-  <div class="sort">
-    <select name="sort" #sort id="sort" *ngIf="config.listDescription.length" (change)="sortBy(sort.value, sortWay)">
+  <div class="sort" *ngIf="config.sortable && config.listDescription.length">
+    <select name="sort" #sort id="sort" (change)="sortBy(sort.value, sortWay)">
       <option *ngFor="let description of config.listDescription" value="{{description.field}}" >{{description.header}}</option>
     </select>
     <button (click)="sortBy(selectedField, sortWay)">
@@ -34,7 +34,7 @@
     [selected]="item.selected"
     [editable]="!!config.editableItem"
     (contentChanged)="context.onContentChanged($event)"
-    (click)="context.onItemClicked(item)"></app-base-list-item>
+    (clicked)="context.onItemClicked(item)"></app-base-list-item>
 </ng-template>
 
 

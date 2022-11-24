@@ -73,7 +73,6 @@ export abstract class BasePage {
         this.beforeQuery();
         const result = await action();
         if (result) {
-          console.log(message);
           // this.core.showSecondaryMessage(message);
         }
         return result;

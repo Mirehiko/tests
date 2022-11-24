@@ -50,11 +50,11 @@ export interface IListConfig<T> {
   groupDivider?: (data: T[], type: any) => T[];
   selectable?: boolean;
   searchable?: boolean;
+  sortable?: boolean;
   editableItem?: boolean;
   navigateTo?: string;
   checkboxOnly?: boolean;
   lockNavigateToItemOnKey?: boolean;
-  sortFunction?: (arr: IListItem<T>[], field: string, way: SORT_WAY) => IListItem<T>[];
 }
 
 @Component({
@@ -63,7 +63,7 @@ export interface IListConfig<T> {
   styleUrls: ['base-list.component.scss']
 })
 export class BaseListComponent<T extends {id: number}> implements OnInit, OnChanges {
-  @Input() listName: string;
+  @Input() listName: string = '';
   @Input() selectedId: number | string | null;
   @Input() dataList: T[] | null = [];
   @Input() config: IListConfig<T>;
@@ -230,7 +230,6 @@ export class BaseListOfGroup<T> {
   }
 
   public sort(field: string, sortWay: SORT_WAY): IListItem<T>[] {
-    console.log(field)
     this._list = [...this._list].sort((a,b) => {
       const fieldValA = a.fields!.find(f => f.field === field);
       const fieldValB = b.fields!.find(f => f.field === field);

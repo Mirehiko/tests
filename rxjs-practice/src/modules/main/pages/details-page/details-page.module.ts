@@ -2,6 +2,8 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from "@angular/core";
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { ElementsModule } from '../../components/elements/elements.module';
+import { IconsModule } from '../../components/icons/icons.module';
 import { CustomDirectivesModule } from '../../directives/custom-directives.module';
 import { DetailsPageComponent } from './details-page.component';
 
@@ -13,6 +15,8 @@ import { DetailsPageComponent } from './details-page.component';
   imports: [
     CustomDirectivesModule,
     CommonModule,
+    IconsModule,
+    ElementsModule,
     ReactiveFormsModule,
     RouterModule.forChild([
       {

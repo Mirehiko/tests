@@ -1,6 +1,5 @@
 .page {
   display: flex;
-  height: 100%;
   width: 100%;
   &.navigated {
     width: auto;
@@ -9,12 +8,22 @@
     }
   }
 }
+h1 {
+  font-weight: 500;
+  font-size: 28px;
+  line-height: 32px;
+  color: rgba(0, 0, 0, 0.87);
+  margin-bottom: 34px;
+}
+app-base-list {
+  padding: 0;
+}
 .page-block {
-  height: 100%;
-  padding: 10px;
+  padding: 52px 64px 162px;
   width: 100%;
   position: relative;
   z-index: 1;
+  background-color: #FAFAFA;
 }
 .button-circle {
   height: 40px;
@@ -35,22 +44,25 @@
   position: fixed;
   top: 0;
   left: 0;
-  padding: 10px;
-  background: #fff;
+  height: 100%;
+  background-color: #E5E5E5;
+  z-index: 15;
 }
 
 
 @media screen and (min-width: 768px){
   .page.navigated {
     .page-block {
-      width: 50%;
+      //width: 50%;
     }
     .page-block__detail {
       display: block;
-      max-width: 50%;
-      border-left: 1px solid #ccc;
       left: auto;
       right: 0;
     }
   }
+}
+.m-paginator {
+  margin-top: 52px;
+  display: block;
 }

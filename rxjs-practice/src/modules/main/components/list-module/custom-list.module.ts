@@ -20,7 +20,7 @@ import { FilterPipe } from './pipes/filter.pipe';
   ],
   exports: [
     BaseListComponent,
-    BaseListItemComponent
+    BaseListItemComponent,
   ],
 })
 export class CustomListModule { }
