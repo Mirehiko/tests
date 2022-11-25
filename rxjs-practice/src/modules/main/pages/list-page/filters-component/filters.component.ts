@@ -1,16 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { map } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
+import { DirectorResponseDto } from '../../../../../app/dto/director-response-dto';
+import { SpeciesResponseDto } from '../../../../../app/dto/species-response-dto';
 import { GoodStorageService } from '../../../services/good-storage.service';
 
-export interface IPort {
-  name: string;
-  id: number;
+export interface ISearchData {
+  directors: DirectorResponseDto[];
+  species: SpeciesResponseDto[];
 }
-
-export interface IFilter {
-  ports: IPort[];
-  types: string[];
+export interface ISearchFilter {
+  species?: SpeciesResponseDto[];
+  director?: DirectorResponseDto;
+  title?: string;
 }
 
 @Component({
@@ -18,40 +20,43 @@ export interface IFilter {
   templateUrl: 'filters.component.html',
   styleUrls: ['filters.component.scss']
 })
-export class FiltersComponent {
+export class FiltersComponent implements OnDestroy {
   form: FormGroup;
-  filter: IFilter;
-
+  filter: ISearchData;
+  sub$: Subscription = new Subscription();
   constructor(
     private goodStorage: GoodStorageService
   ) {
-    this.filter = {
-      ports: [
-        {name: 'tag 1', id: 1},
-        {name: 'tag 2', id: 2},
-        {name: 'tag 3', id: 3},
-      ],
-      types: ['Extra cheese', 'Mushroom', 'Onion', 'Pepperoni', 'Sausage', 'Tomato']
-    };
 
     this.initForm();
   }
 
+  ngOnDestroy(): void {
+    this.sub$.unsubscribe();
+  }
+
   private async initForm(): Promise<void> {
     this.form = new FormGroup({
-      name: new FormControl(''),
-      ports: new FormControl([]),
-      type: new FormControl(''),
+      title: new FormControl(''),
+      species: new FormControl([]),
+      director: new FormControl(''),
     });
   }
 
   ngOnInit(): void {
-    this.form.valueChanges.subscribe(values => {
-      console.log(values)
-      this.goodStorage.goods$.next({
-        from: '',
-        items: this.goodStorage.goods.filter(data => data.title.toLowerCase().includes(values.name.toLowerCase()))
-      });
-    });
+    this.sub$.add(
+      this.goodStorage.filters$.subscribe(value => {
+        this.filter = value
+      })
+    )
+    this.sub$.add(this.form.valueChanges.subscribe(values => {
+      const speciesIds = values.species.map((s: SpeciesResponseDto) => s.id);
+      this.goodStorage.iSearchFilter = {
+        title: `${values.title}` || '',
+        director: values.director || '',
+        species: [...values.species]
+      };
+      this.goodStorage.goods$.next({from: '', items: this.goodStorage.goods});
+    }));
   }
 }

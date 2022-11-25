@@ -1,4 +1,4 @@
-import { Directive, Input, Output } from '@angular/core';
+import { Directive, Input, Output, TemplateRef, ViewChild } from '@angular/core';
 
 @Directive({
   selector: 'm-input-button',

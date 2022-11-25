@@ -6,8 +6,23 @@ export const goodListConfig: IListConfig<GoodResponseDto> = {
   listDescription: [
     {
       field: 'title',
-      header: 'Название',
+      header: 'Title',
     },
+    {
+      field: 'director',
+      header: 'Director',
+      valueGetter(data: GoodResponseDto) {
+        return data.director.map(d => d.name).join(', ');
+      }
+    },
+    {
+      field: 'createdAt',
+      header: 'Created',
+      valueGetter(data: GoodResponseDto) {
+        return new Date(data.createdAt).toLocaleDateString();
+      }
+    },
+
   ],
   editableItem: true,
   navigateTo: '/goods/item',

@@ -16,9 +16,11 @@
         ></div>
       </ng-template>
     </app-base-list>
-    <m-paginator [value]="page.value" ngDefaultControl></m-paginator>
+    <m-paginator [value]="page.value" [formControl]="page" ngDefaultControl></m-paginator>
   </div>
-  <filters></filters>
+  <div class="page-block page-block__filters">
+    <filters></filters>
+  </div>
   <div class="page-block page-block__detail">
     <router-outlet></router-outlet>
   </div>

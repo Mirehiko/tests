@@ -30,7 +30,6 @@ export class MOptionComponent {
 
   onChange(data: any): void {
     const includes = this.dataModel.value.indexOf(this.value);
-    console.log(this.value)
     if ( includes !== -1 ) {
       this.dataModel.value = this.dataModel.value.filter((val: string) => val !== this.value);
       return;

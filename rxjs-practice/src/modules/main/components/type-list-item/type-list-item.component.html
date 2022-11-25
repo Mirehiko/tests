@@ -4,9 +4,11 @@
     <span class="item-header__icon" icon-arrow></span>
   </div>
   <div class="item__body">
-    <div class="item-body__block" *ngFor="let field of item.fields">
-      <span class="body-block__key">{{field.header}}</span>
-      <span class="body-block__value" (click)="onFieldClicked(field)">{{field.value}}</span>
-    </div>
+    <ng-container *ngFor="let field of item.fields">
+      <div item-body *ngIf="field.field !== 'title'">
+        <span key>{{field.header}}</span>
+        <span value (click)="onFieldClicked(field)">{{field.value}}</span>
+      </div>
+    </ng-container>
   </div>
 </div>

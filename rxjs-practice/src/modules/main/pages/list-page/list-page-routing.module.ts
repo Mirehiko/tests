@@ -9,10 +9,6 @@ const routes: Routes = [
     path: "",
     component: ListPageComponent,
     children: [
-      // {
-      //   path: 'trash',
-      //   loadChildren: () => import("./task-list/task-list.module").then(m => m.TaskListModule),
-      // },
       {
         canActivate: [DetailsPageGuard],
         path: 'item/:id',
