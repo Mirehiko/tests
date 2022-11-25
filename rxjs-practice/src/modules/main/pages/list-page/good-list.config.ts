@@ -5,7 +5,7 @@ import { IListConfig } from '../../components/list-module/base-list.component';
 export const goodListConfig: IListConfig<GoodResponseDto> = {
   listDescription: [
     {
-      field: 'name',
+      field: 'title',
       header: 'Название',
     },
   ],

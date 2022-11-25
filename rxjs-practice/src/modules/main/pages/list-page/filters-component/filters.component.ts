@@ -50,7 +50,7 @@ export class FiltersComponent {
       console.log(values)
       this.goodStorage.goods$.next({
         from: '',
-        items: this.goodStorage.goods.filter(data => data.name.includes(values.name))
+        items: this.goodStorage.goods.filter(data => data.title.toLowerCase().includes(values.name.toLowerCase()))
       });
     });
   }

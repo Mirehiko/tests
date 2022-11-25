@@ -3,26 +3,23 @@ import { GoodRequestDto } from '../../../../app/dto/good-request-dto';
 import { GoodResponseDto } from '../../../../app/dto/good-response-dto';
 import { MainModule } from '../../main.module';
 import { fromFetch } from 'rxjs/fetch';
-import { map, mergeMap, share, switchMap } from "rxjs/operators";
-import { Observable, of } from 'rxjs';
+import { map, share, switchMap } from "rxjs/operators";
+import { Observable } from 'rxjs';
 
 
 @Injectable({ providedIn: MainModule })
 export class GoodRestService {
-  baseUrl: string = 'https://jsonplaceholder.typicode.com';
+  // baseUrl: string = 'https://jsonplaceholder.typicode.com';
+  baseUrl: string = 'https://63803ec42f8f56e28e9ec3c7.mockapi.io/api/v1/';
+
 
   constructor(
   ) {
   }
 
   public getList(): Observable<GoodResponseDto[]> {
-    return fromFetch(`${this.baseUrl}/posts?userId=1`).pipe(
+    return fromFetch(`${this.baseUrl}/film`).pipe(
       switchMap(response => response.json()),
-      map(data => {
-        return data.map((item: any) => {
-          return {id: item.id, name: item.title, description: item.body};
-        });
-      }),
       share()
     );
   }
@@ -36,9 +33,6 @@ export class GoodRestService {
       },
     }).pipe(
       switchMap(response => response.json()),
-      map(data => {
-        return {id: data.id, name: data.title, description: data.body};
-      })
     );
   }
 
@@ -51,18 +45,12 @@ export class GoodRestService {
       },
     }).pipe(
       switchMap(response => response.json()),
-      map(data => {
-        return {id: data.id, name: data.title, description: data.body};
-      })
     );
   }
 
   public getById(id: number): Observable<GoodResponseDto> {
     return fromFetch(`${this.baseUrl}/posts/${id}`).pipe(
       switchMap(response => response.json()),
-      map(data => {
-        return {id: data.id, name: data.title, description: data.body};
-      })
     );
   }
 
@@ -81,15 +69,9 @@ export class GoodRestService {
     if (id) {
       return JSON.stringify({
         id,
-        title: request.name,
-        body: request.description,
-        userId: 1,
+        ...request
       });
     }
-    return JSON.stringify({
-      title: request.name,
-      body: request.description,
-      userId: 1,
-    });
+    return JSON.stringify(request);
   }
 }
