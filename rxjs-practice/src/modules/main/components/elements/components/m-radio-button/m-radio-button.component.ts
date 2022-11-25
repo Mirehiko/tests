@@ -1,6 +1,6 @@
 import {
   ChangeDetectionStrategy,
-  Component, Input,
+  Component, TemplateRef, ViewChild
 } from '@angular/core';
 import { MInputButtonDirective } from '../../directives/m-input-button.directive';
 import { DataModel } from '../data.model';

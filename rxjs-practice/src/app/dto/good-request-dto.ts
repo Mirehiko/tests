@@ -1,6 +1,6 @@
 export class GoodRequestDto {
-  title: string;
-  director: string;
-  createdAt: string;
-  species: []
+  title?: string;
+  director?: number[];
+  createdAt?: string;
+  species?: []
 }

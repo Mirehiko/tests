@@ -61,8 +61,10 @@ export class MRadioGroupComponent extends MInputDirective implements AfterConten
   }
 
   ngAfterContentInit(): void {
-    this.radioButtons.toArray().forEach((value, index) => {
-      value.dataModel = this.dataModel;
-    });
+    this.sub$.add(this.radioButtons.changes.subscribe((data: QueryList<MRadioGroupComponent>) => {
+      data.toArray().forEach((value, index) => {
+        value.dataModel = this.dataModel;
+      });
+    }));
   }
 }

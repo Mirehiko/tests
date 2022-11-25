@@ -33,10 +33,22 @@ export class MPaginatorComponent extends MInputDirective {
   ) {super(el);}
 
   prev(): void {
-    // this.value = this.value.prev;
+    if (this.value.prev !== 0) {
+      const p = {
+        prev: this.value.prev - 1,
+        current: this.value.current - 1,
+        next: this.value.next - 1,
+      };
+      this.value = p;
+    }
   }
 
   next(): void {
-    // this.value = this.value.next;
+    const p = {
+      prev: this.value.prev + 1,
+      current: this.value.current + 1,
+      next: this.value.next + 1,
+    };
+    this.value = p;
   }
 }

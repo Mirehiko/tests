@@ -35,18 +35,10 @@
   }
 }
 
-.body-block__key {
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 24px;
-  text-transform: capitalize;
-}
-
-.body-block__value {
-  cursor: pointer;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 24px;
-  color: #2962FF;
-  margin-left: 104px;
+.item-body__block {
+  margin-left: 100px;
+  min-width: 33%;
+  &:first-child {
+    margin-left: 0;
+  }
 }

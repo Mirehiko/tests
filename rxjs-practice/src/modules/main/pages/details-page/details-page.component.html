@@ -8,15 +8,26 @@
     </a>
   </div>
   <div class="page-body scrollable">
-    <form *ngIf="form" [formGroup]="form" class="form section">
+    <form *ngIf="form && goodIn" [formGroup]="form" class="form section">
       <h2 [classList]="'f-control control-name'" [minHeight]="'initial'" [lockEnter]="true" inputDirective
           formControlName="name"
           (onEnter)="save()"
           [placeholder]="namePlaceholder"></h2>
-      <div [classList]="'f-control control-description'" [minHeight]="'100px'" inputDirective
-           formControlName="description"
-           (onEnter)="save()"
-           [placeholder]="descriptionPlaceholder"></div>
+
+      <div class="detail-fields">
+        <div item-body>
+          <span key>Director</span>
+          <span value>{{directors}}</span>
+        </div>
+        <div item-body>
+          <span key>Species</span>
+          <span value>{{species}}</span>
+        </div>
+        <div item-body>
+          <span key>Created At</span>
+          <span value>{{this.goodIn.createdAt}}</span>
+        </div>
+      </div>
     </form>
   </div>
   <div class="page-footer">

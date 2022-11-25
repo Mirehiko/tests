@@ -101,7 +101,7 @@ export class BaseListComponent<T extends {id: number}> implements OnInit, OnChan
 
     if (changes['dataList']) {
       this.dataList = changes['dataList'].currentValue;
-      this.refresh();
+      await this.refresh();
       this.groupedList.list[0].sort(this.selectedField, this.sortWay);
     }
 

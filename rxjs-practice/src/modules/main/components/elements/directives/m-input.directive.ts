@@ -134,11 +134,23 @@ export class MInputDirective implements ControlValueAccessor, Validator, OnChang
 
   onTouch: any = () => {}
 
-  writeValue(value: string) {
+  writeValue(value: any) {
+
     if (value !== this._value) {
       this._value = value;
       this.el.nativeElement.value = value;
       this.onChange(this._value);
+    }
+
+    if (this.parent) {
+      this.setClasses();
+    }
+
+    if (!this.value || !value.lengh) {
+      const inputs = this.el.nativeElement.querySelectorAll('input')
+      inputs.forEach((el: any) => {
+        el.checked = false;
+      })
     }
   }
 
