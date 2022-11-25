@@ -2,7 +2,7 @@
   height: inherit;
   display: flex;
   flex-direction: column;
-  width: 100%;
+  width: 50%;
 }
 .page-body {
   height: 100%;
@@ -26,24 +26,42 @@ pre {
     .control-placeholder {
       position: absolute;
     }
-    .control-name .control-placeholder {
-      font-weight: 500;
-      font-size: 28px;
-      line-height: 33px;
-      color: rgba(0, 0, 0, 0.87);
-
-      //margin: 10px 0 15px;
+    .control-name {
+      margin-bottom: 53px;
+      .control-placeholder {
+        font-weight: 500;
+        font-size: 28px;
+        line-height: 33px;
+        color: rgba(0, 0, 0, 0.87);
+      }
     }
+
     .f-control {
-      padding: 5px 10px 0;
-      margin-bottom: 10px;
-      //border: 1px solid #efefef;
+      padding: 5px 0 0;
     }
     .control-description, .control-description * {
       font-size: 14px;
       line-height: 20px;
       font-family: sans-serif;
       padding-top: 8px;
+    }
+  }
+}
+.control-name {
+  margin-bottom: 53px;
+}
+.detail-fields {
+  display: flex;
+  flex-wrap: wrap;
+  .item-body__block {
+    width: 50%;
+    margin-bottom: 40px;
+    display: flex;
+  }
+  ::ng-deep {
+    .body-block__key, .body-block__value {
+      width: 100%;
+      display: block;
     }
   }
 }

@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Output } from '@angular/core';
-import { GoodResponseDto } from '../../../../../app/dto/good-response-dto';
-import { IListItemField } from '../../../components/list-module/base-list.component';
-import { BaseListItemComponent } from '../../../components/list-module/list-items/base-list-item.component';
+import { GoodResponseDto } from '../../../../app/dto/good-response-dto';
+import { IListItemField } from '../list-module/base-list.component';
+import { BaseListItemComponent } from '../list-module/list-items/base-list-item.component';
 
 
 @Component({

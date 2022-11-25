@@ -2,29 +2,27 @@
   <form *ngIf="form" [formGroup]="form">
     <h2>Фильтры</h2>
     <m-input-field class="w-100">
-      <m-label>Название</m-label>
-      <input type="text" m-input formControlName="name" ngDefaultControl >
-      <span m-icon mPrefix>
-            <span class="icon-details" icon-arrow></span>
-          </span>
+      <m-label>Title</m-label>
+      <input type="text" m-input formControlName="title" ngDefaultControl >
     </m-input-field>
 
-    <m-input-field class="w-100" >
-      <m-label>Название</m-label>
-      <m-select formControlName="ports" ngDefaultControl>
+    <m-input-field class="w-100">
+      <m-label>Species</m-label>
+      <m-select formControlName="species" ngDefaultControl>
         <m-select-trigger>
-          {{(form.get('ports')!.value?.length === 1) ? form.get('ports')!.value?.[0].name : ''}}
-          <span *ngIf="(form.get('ports')!.value?.length || 0) > 1">
-            Выбрано {{form.get('ports')!.value?.length}}
+          {{(form.get('species')!.value?.length === 1) ? form.get('species')!.value?.[0].name : ''}}
+          <span *ngIf="(form.get('species')!.value?.length || 0) > 1">
+            Выбрано {{form.get('species')!.value?.length}}
           </span>
         </m-select-trigger>
-        <m-option [value]="top" *ngFor="let top of filter.ports">{{top.name}}</m-option>
+        <m-option [value]="spec" *ngFor="let spec of filter.species">{{spec.name}}</m-option>
       </m-select>
     </m-input-field>
 
-    <m-radio-group class="w-100" formControlName="type" ngDefaultControl >
-      <m-label>Type</m-label>
-      <m-radio-button [name]="'typeGroup'" *ngFor="let type of filter.types" [value]="type">{{type}}</m-radio-button>
+    <m-radio-group class="w-100" formControlName="director" ngDefaultControl>
+      <m-label>Director</m-label>
+      <m-radio-button [name]="'typeGroup'" *ngFor="let dir of filter.directors" [value]="dir">{{dir.name}}</m-radio-button>
     </m-radio-group>
+
   </form>
 </section>

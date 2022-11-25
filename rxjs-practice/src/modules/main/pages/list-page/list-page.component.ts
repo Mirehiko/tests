@@ -5,6 +5,7 @@ import { filter, Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { GoodRequestDto } from 'src/app/dto/good-request-dto';
 import { GoodResponseDto } from '../../../../app/dto/good-response-dto';
+import { SpeciesResponseDto } from '../../../../app/dto/species-response-dto';
 import { IListItemField } from '../../components/list-module/base-list.component';
 import { IListItemChanged } from '../../components/list-module/list-items/base-list-item.component';
 import { CoreService } from '../../services/core.service';
@@ -24,7 +25,7 @@ export class ListPageComponent implements OnInit, OnDestroy {
   public goodList: GoodResponseDto[] = [];
   public isChildActive: boolean = false;
   private initiated: any;
-  public page = new FormControl({prev: 2, current: 3, next: 4});
+  public page: FormControl;
 
   private subscription: any;
   private child: any
@@ -36,6 +37,7 @@ export class ListPageComponent implements OnInit, OnDestroy {
     private router: Router
   ) {
     this.core.setTitle('Goods');
+    this.page = new FormControl(this.goodStorageService.page);
 
     this.initiated = this.router.events.subscribe(e => {
         this.detectRouteChanges();
@@ -48,10 +50,34 @@ export class ListPageComponent implements OnInit, OnDestroy {
       }
     }));
 
+    this.sub$.add(this.page.valueChanges.subscribe(p => {
+      this.goodStorageService.setPage(p);
+      this.goodStorageService.iSearchFilter = this.goodStorageService.initialFilter;
+      this.goodStorageService.getGoods();
+    }));
+
     this.sub$.add(this.goodStorageService.goods$
-      .pipe(filter(data => data.from === 'detail' || data.from === ''), map(data => data.items))
+      .pipe(
+        filter(data => data.from === 'detail' || data.from === ''),
+        map(data => data.items),
+      )
       .subscribe(items => {
-        this.goodList = items;
+        const speciesIds = this.goodStorageService.iSearchFilter.species?.map((s: SpeciesResponseDto) => s.id);
+        this.goodList = items.filter(data => {
+          let isName = true;
+          if (this.goodStorageService.iSearchFilter.title) {
+            isName = data.title.toLowerCase().includes(this.goodStorageService.iSearchFilter.title.toLowerCase());
+          }
+          let isDirector = true;
+          if (this.goodStorageService.iSearchFilter.director) {
+            isDirector = data.director.map(d => d.id).includes(this.goodStorageService.iSearchFilter.director.id)
+          }
+          let isSpecies = true;
+          if (this.goodStorageService.iSearchFilter.species?.length) {
+            isSpecies = !!data.species.map(s => s.id).filter(id => speciesIds!.includes(id)).length
+          }
+          return isName && isDirector && isSpecies;
+        })
       }));
   }
 
@@ -68,7 +94,6 @@ export class ListPageComponent implements OnInit, OnDestroy {
   }
 
   async ngOnInit(): Promise<void> {
-    console.log(this.page.value)
   }
 
   onContentChanged(change: IListItemChanged<GoodResponseDto>) {
@@ -77,12 +102,12 @@ export class ListPageComponent implements OnInit, OnDestroy {
   }
 
   onFieldClicked(field: IListItemField): void {
-    console.log(field)
+    // console.log(field)
   }
 
   onItemClicked(id: number | string) {
     this.router.navigate([`goods/item/${id}`]);
-    this.goodList = this.goodStorageService.goods$.value.items;
+    // this.goodList = this.goodStorageService.goods$.value.items;
     this.goodStorageService.selectGood(id, 'list');
   }
 }
