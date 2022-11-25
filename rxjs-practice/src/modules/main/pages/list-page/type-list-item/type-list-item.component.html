@@ -1,0 +1,12 @@
+<div class="list-item" *ngIf="item">
+  <div class="item__header" (click)="onClicked()">
+    <span class="item-header__text">{{item.data.title}}</span>
+    <span class="item-header__icon" icon-arrow></span>
+  </div>
+  <div class="item__body">
+    <div class="item-body__block" *ngFor="let field of item.fields">
+      <span class="body-block__key">{{field.header}}</span>
+      <span class="body-block__value" (click)="onFieldClicked(field)">{{field.value}}</span>
+    </div>
+  </div>
+</div>

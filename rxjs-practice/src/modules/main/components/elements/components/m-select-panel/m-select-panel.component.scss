@@ -1,0 +1,16 @@
+:host {
+  position: absolute;
+  //top: 43px;
+  //left: 0;
+  //width: 100%;
+  //z-index: 1000;
+  display: block;
+  padding: 17px;
+  background-color: #fff;
+  box-shadow: 0px 3px 6px rgb(0 0 0 / 23%), 0px 3px 6px rgb(0 0 0 / 16%);
+  ::ng-deep {
+    m-option:last-child .m-checkbox-button {
+      margin-bottom: 0;
+    }
+  }
+}

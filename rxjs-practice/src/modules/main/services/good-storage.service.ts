@@ -49,7 +49,7 @@ export class GoodStorageService {
     }
     this.selectedGoodId = id;
     this.selectedGood$.next({from: from!, item: this.goods.find(good => good.id === id) || new GoodResponseDto()});
-    // this.goods$.next({from: '', items: this.goods});
+    // this.goods$.next-icon({from: '', items: this.goods});
   }
 
   public async getGood(id: number): Promise<void> {

@@ -1,16 +1,24 @@
 <div class="page" [class.navigated]="isChildActive">
   <div class="page-block page-block__body">
+    <h1>List page</h1>
     <app-base-list
-      [listName]="listName"
       [dataList]="goodList"
       [config]="goodListConfig"
       [selectedId]="goodStorageService.selectedGoodId"
       (contentChanged)="onContentChanged($event)"
       (itemClicked)="onItemClicked($event)"
     >
-      <button class="button-circle" (click)="onItemClicked('new')" title="Add good">+</button>
+<!--      <button m-button class="form-btn&#45;&#45;default" (click)="onItemClicked('new')" title="Add good">Add</button>-->
+      <ng-template #customTemplate let-item='item' let-context="context">
+        <div type-list-item [item]="item"
+             (clicked)="context.onItemClicked(item)"
+             (fieldClicked)="onFieldClicked($event)"
+        ></div>
+      </ng-template>
     </app-base-list>
+    <m-paginator [value]="page.value" ngDefaultControl></m-paginator>
   </div>
+  <filters></filters>
   <div class="page-block page-block__detail">
     <router-outlet></router-outlet>
   </div>

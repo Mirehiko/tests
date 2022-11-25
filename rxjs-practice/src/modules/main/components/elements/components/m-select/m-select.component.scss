@@ -1,0 +1,10 @@
+:host {
+  display: block;
+  width: 100%;
+  position: relative;
+  z-index: 2;
+  cursor: pointer;
+}
+.m-select-placeholder {
+  display: inline-block;
+}

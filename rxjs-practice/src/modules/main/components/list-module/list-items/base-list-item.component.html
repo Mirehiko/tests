@@ -1,4 +1,4 @@
-<div *ngIf="item" class="list-item">
+<div *ngIf="item" class="list-item" (click)="onClicked()">
   <input type="checkbox" *ngIf="selectable">
   <ng-container *ngIf="editable; else defaultTemplate">
     <ng-container *ngFor="let field of item!.fields">

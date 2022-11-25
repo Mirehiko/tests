@@ -1,5 +1,7 @@
 export class GoodResponseDto {
   id: number;
-  name: string;
-  description?: string;
+  title: string;
+  director: string;
+  createdAt: string;
+  species: []
 }

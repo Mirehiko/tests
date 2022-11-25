@@ -1,0 +1,21 @@
+<div class="select-content" (click)="open()">
+  <span class="m-select-placeholder">
+    <ng-container #vc></ng-container>
+  </span>
+</div>
+
+<ng-template #valueTpl>
+  <span>{{value}}</span>
+</ng-template>
+
+<ng-template #triggerTpl>
+  <ng-content select="m-select-trigger"></ng-content>
+</ng-template>
+
+<ng-template #panel>
+  <m-select-panel>
+    <ng-content select="m-option"></ng-content>
+  </m-select-panel>
+</ng-template>
+
+

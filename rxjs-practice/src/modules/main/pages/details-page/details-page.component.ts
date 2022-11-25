@@ -61,8 +61,8 @@ export class DetailsPageComponent extends BaseDetailPage implements OnInit, OnDe
       this.goodIn = item as GoodResponseDto;
       if (this.form) {
         this.form.patchValue({
-          name: this.goodIn.name,
-          description: this.goodIn.description
+          name: this.goodIn.title,
+          description: this.goodIn.director
         })
       }
     }));
@@ -75,8 +75,8 @@ export class DetailsPageComponent extends BaseDetailPage implements OnInit, OnDe
 
   async save(data?: any): Promise<void> {
     this.goodOut = new GoodRequestDto();
-    this.goodOut.name = this.form.value.name.replace(/<[^>]*>/g, '');
-    this.goodOut.description = this.form.value.description.replace(/<[^>]*>/g, '');
+    this.goodOut.title = this.form.value.name.replace(/<[^>]*>/g, '');
+    this.goodOut.director = this.form.value.description.replace(/<[^>]*>/g, '');
     if (this.isNew) {
       await this.goodStorageService.create(this.goodOut);
       this.goodStorageService.selectGood('new');
