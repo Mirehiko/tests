@@ -36,13 +36,20 @@ export class GoodStorageService {
     directors: []
   };
   public filters$ = new BehaviorSubject<ISearchData>(this.filters);
+  public initialFilter: ISearchFilter = {};
   public iSearchFilter: ISearchFilter = {};
   public page = {prev: 0, current: 1, next: 2};
+  public page$ = new BehaviorSubject(this.page);
 
   constructor(
     private goodRestService: GoodRestService
   ) {
     this.getGoods();
+  }
+
+  public setPage(page: any) {
+    this.page = page;
+    this.page$.next(this.page);
   }
 
   public getGoods(): void {

@@ -73,7 +73,14 @@ export class MSelectComponent extends MInputDirective implements AfterContentIni
       ? this.triggerTpl.createEmbeddedView(null)
       : this.viewRef = this.valueTpl.createEmbeddedView(null);
     this.vc.insert(this.viewRef);
+
+    this.sub$.add(this.options.changes.subscribe((data: QueryList<MOptionComponent>) => {
+      data.toArray().forEach((value, index) => {
+        value.dataModel = this.dataModel;
+      });
+    }));
   }
+
 
   ngAfterContentInit(): void {
     this.sub$.add(this.options.changes.subscribe((data: QueryList<MOptionComponent>) => {

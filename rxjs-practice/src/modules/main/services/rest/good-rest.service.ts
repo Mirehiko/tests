@@ -68,7 +68,6 @@ export class GoodRestService {
         return data;
       }),
       catchError((err) => {
-        console.log(err)
         return of ({error: true, message: 'asdasd'})
       })
     );

@@ -51,7 +51,8 @@ export class ListPageComponent implements OnInit, OnDestroy {
     }));
 
     this.sub$.add(this.page.valueChanges.subscribe(p => {
-      this.goodStorageService.page = p;
+      this.goodStorageService.setPage(p);
+      this.goodStorageService.iSearchFilter = this.goodStorageService.initialFilter;
       this.goodStorageService.getGoods();
     }));
 

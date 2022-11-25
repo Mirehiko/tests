@@ -6,7 +6,7 @@
       <input type="text" m-input formControlName="title" ngDefaultControl >
     </m-input-field>
 
-    <m-input-field class="w-100" *ngIf="filter.species.length">
+    <m-input-field class="w-100">
       <m-label>Species</m-label>
       <m-select formControlName="species" ngDefaultControl>
         <m-select-trigger>
@@ -19,7 +19,7 @@
       </m-select>
     </m-input-field>
 
-    <m-radio-group class="w-100" formControlName="director" ngDefaultControl *ngIf="filter.directors.length">
+    <m-radio-group class="w-100" formControlName="director" ngDefaultControl>
       <m-label>Director</m-label>
       <m-radio-button [name]="'typeGroup'" *ngFor="let dir of filter.directors" [value]="dir">{{dir.name}}</m-radio-button>
     </m-radio-group>

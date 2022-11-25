@@ -47,8 +47,9 @@ export class FiltersComponent implements OnDestroy {
     this.sub$.add(
       this.goodStorage.filters$.subscribe(value => {
         this.filter = value
-      })
-    )
+      }),
+    );
+
     this.sub$.add(this.form.valueChanges.subscribe(values => {
       const speciesIds = values.species.map((s: SpeciesResponseDto) => s.id);
       this.goodStorage.iSearchFilter = {
